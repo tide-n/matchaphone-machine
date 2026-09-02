@@ -1,0 +1,23 @@
+/* 修复移动端底部导航被手势条遮挡 */
+:root {
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+footer,
+.bottom-nav,
+.tab-bar,
+.app-bottom-bar,
+[class*="bottom"],
+[class*="tabbar"] {
+  padding-bottom: calc(12px + var(--safe-area-inset-bottom)) !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 99 !important;
+}
+
+main,
+.page-content,
+.scroll-container,
+#root {
+  padding-bottom: 88px !important;
+}
