@@ -1,6 +1,13 @@
-// 自部署绕过激活，保留所有导出防止编译报错
+// 自部署绕过激活 完整占位，补齐所有导出防止TS报错
 export const ACTIVATION_ENVIRONMENT_ID = "self-hosted-bypass";
 export const ACTIVATION_REGION = "local";
+
+export class ActivationClientError extends Error {
+  constructor(msg?: string) {
+    super(msg);
+    this.name = "ActivationClientError";
+  }
+}
 
 export type ActivationDeviceMethod = "p256" | "installation-secret";
 
@@ -61,4 +68,44 @@ export function canonicalActivationPayload(_payload: ActivationLicensePayload) {
     issuedAt: Date.now(),
     permanent: true
   });
+}
+
+export async function activateDevice(): Promise<ActivationResult> {
+  return {
+    ok: true,
+    license: {
+      payload: {
+        version: 1,
+        environmentId: "self-hosted",
+        activationId: "bypass",
+        cloudbaseUid: "",
+        deviceKeyHash: "",
+        issuedAt: Date.now(),
+        permanent: true
+      },
+      signature: "",
+      publicKeyId: ""
+    }
+  };
+}
+
+export async function verifyStoredActivation(): Promise<boolean> {
+  // 核心：直接返回true，跳过校验
+  return true;
+}
+
+export function clearActivationStorage() {
+  return;
+}
+
+export async function ensureActivationDevice() {
+  return;
+}
+
+export async function verifyActivationDevicePossession(): Promise<boolean> {
+  return true;
+}
+
+export function verifyActivationLicenseSignature(): boolean {
+  return true;
 }
